@@ -1,0 +1,10 @@
+#Project
+
+
+Create a basic to-do app with layered architecture, that allow:
+
+    - Create tasks
+    - get all tasks
+    - search specific tasks
+    - update a task
+    - deletes an specific task

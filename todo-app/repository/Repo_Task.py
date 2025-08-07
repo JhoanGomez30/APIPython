@@ -31,8 +31,8 @@ class Repo_Task:
         self.cursor.execute('SELECT * FROM tasks WHERE id = %s', (task_id,))
         row = self.cursor.fetchone()
         if row:
-            # return Task(id=row[0], title=row[1], description=row[2], completed=row[3])
-            return Task(*row)
+            return Task(id=row[0], title=row[1], description=row[2], completed=row[3])
+            # return Task(*row)
         return None
 
     def get_all_tasks(self):
@@ -40,20 +40,21 @@ class Repo_Task:
         rows = self.cursor.fetchall()
         return [Task(id=row[0], title=row[1], description=row[2], completed=row[3]) for row in rows]   
     
-    def update_task(self, task):
+    def update_task(self, id, task):
         self.cursor.execute('''
-            UPDATE tasks SET title = %s, description = %s, completed = %s
+            UPDATE tasks SET title = %s, description = %s, completed = %s, id = %s
             WHERE id = %s
-        ''', (task.title, task.description, task.completed, task.id))
+        ''', (task.title, task.description, task.completed, task.id, id))
         self.connection.commit()
     
     def delete_task(self, task_id):
-        self.cursor.execute('DELETE FROM tasks WHERE id = %s', (task_id))
+        self.cursor.execute('DELETE FROM tasks WHERE id = %s', (task_id,))
         self.connection.commit()
     
     def delete_all(self):
         self.cursor.execute('DELETE FROM tasks')
         self.connection.commit()
+        return
 
     def complete_task(self, task_id):
         self.cursor.execute('UPDATE tasks SET completed = TRUE WHERE id = %s', (task_id,))

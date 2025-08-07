@@ -7,7 +7,8 @@ class Service_Task:
 
     def add_task(self, title, description):
         task = Task(title, description)
-        return self.repo.add_task(task)
+        self.repo.add_task(task)
+        return task
     
     def get_task(self, task_id):
         return self.repo.get_task(task_id)
@@ -15,8 +16,8 @@ class Service_Task:
     def get_all_tasks(self):
         return self.repo.get_all_tasks()
     
-    def update_task(self, task):
-        self.repo.update_task(task)
+    def update_task(self, id, task):
+        self.repo.update_task(id, task)
     
     def delete_task(self, task_id):
         self.repo.delete_task(task_id)

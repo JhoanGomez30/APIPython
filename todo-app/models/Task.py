@@ -26,5 +26,22 @@ class Task():
     def mark_completed(self, state):
         self.completed = state
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "completed": self.completed
+        }
+
     def __str__(self):
         return f"Task(id={self.id}, title='{self.title}', description='{self.description}', completed={self.completed})"
+
+    @staticmethod
+    def from_dict(data):
+        return Task(
+            id=data.get("id"),
+            title=data["title"],
+            description=data.get("description", ""),
+            completed=data.get("completed", False)
+        )

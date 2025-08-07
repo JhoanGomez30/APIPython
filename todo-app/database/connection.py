@@ -3,11 +3,11 @@ import psycopg2
 def connect_to_db():
     try:
         connection = psycopg2.connect(
-            dbname= "postgres",
-            user= "postgres",
+            user = "postgres",
+            dbname= "notingapp",
             password= "postgres",
             host= "localhost",
-            port= "5432")
+            port= "5433")
         
         cursor = connection.cursor()
         print("Successfully connected to the database")

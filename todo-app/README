@@ -8,3 +8,41 @@ Create a basic to-do app with layered architecture, that allow:
     - search specific tasks
     - update a task
     - deletes an specific task
+
+
+        {
+            "completed": false,
+            "description": "make the dishes and clean the kitchen",
+            "id": 94,
+            "title": "Make dishes"
+        },
+        {
+            "completed": false,
+            "description": " kitchen",
+            "id": 1,
+            "title": "Make"
+        },
+        {
+            "completed": false,
+            "description": "cook the dinner of the family",
+            "id": 2,
+            "title": "Cook the dinner"
+        },
+        {
+            "completed": false,
+            "description": "got to the house of my girlfriend",
+            "id": 4,
+            "title": "visit my gf"
+        },
+        {
+            "completed": true,
+            "description": "aplly to 2 jobs in linkedin",
+            "id": 5,
+            "title": "apply in linkedin"
+        },
+        {
+            "completed": true,
+            "description": "play rugby with boys",
+            "id": 3,
+            "title": "play rugby"
+        }

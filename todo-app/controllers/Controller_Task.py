@@ -3,13 +3,9 @@ from models.Task import Task
 from flask import Blueprint, jsonify, request
 from exceptions.Already_Exist_Task_Exception import Already_Exist_Task_Exception
 from exceptions.Task_Not_Found_Exception import Task_Not_Found_Exception
+from exceptions.Task_Already_Completed import Task_Already_Completed
+from exceptions.Task_Already_Decompleted import Task_Already_Decompleted
 
-    # def __init__(self, service_task):
-    #     self.service_task = service_task
-
-    # @app.route('/taks')
-    # def get_users():
-    #     return "1"
 
 task_bp = Blueprint('task_bp', __name__)
 services = Service_Task()
@@ -19,19 +15,6 @@ def add_task():
     data = request.get_json()
 
     try:
-
-        # if not isinstance(data.get("title"), str):
-        #     return jsonify({
-        #         "message": "Validation error",
-        #         "error":"Title should be a string"
-        #     }), 400
-        
-        # if(data.get("title") is None or data.get("title").strip() == ""):
-        #     return jsonify({
-        #         "message": "Validation error",
-        #         "error": "Title cannot be empty"
-        #     }), 400
-
         task = services.add_task(**data)
         return jsonify({ 
             "message": "Task created successfully",
@@ -125,7 +108,12 @@ def update_task(id):
         return jsonify({
             "message": "task updated",
             "data" : updated.to_dict()
-        }), 201
+        }), 200
+    
+    except Already_Exist_Task_Exception as aet:
+        return jsonify({
+            "error": str(aet)
+        }),409
     
     except Task_Not_Found_Exception as tnf:
         return jsonify({
@@ -208,6 +196,11 @@ def complete_task(id):
             "message": str(tnf)
         }), 404
     
+    except Task_Already_Completed as aet:
+        return jsonify({
+            "error": str(aet)
+        }),400
+    
     except ValueError as ve:
         return jsonify({
             "error": "Validation error",
@@ -258,7 +251,7 @@ def search_by_title(title):
         task = services.search_by_title(title)
 
         return jsonify({
-            "message": "",
+            "message": "task found",
             "data": [t.to_dict() for t in task]
         }), 200
     except Task_Not_Found_Exception as tnf:

@@ -18,12 +18,6 @@ Create a basic to-do app with layered architecture, that allow:
         },
         {
             "completed": false,
-            "description": " kitchen",
-            "id": 1,
-            "title": "Make"
-        },
-        {
-            "completed": false,
             "description": "cook the dinner of the family",
             "id": 2,
             "title": "Cook the dinner"
@@ -41,8 +35,26 @@ Create a basic to-do app with layered architecture, that allow:
             "title": "apply in linkedin"
         },
         {
+            "completed": false,
+            "description": "Study sql alchemy 2 hours all days",
+            "id": 7,
+            "title": "Study SQLAlchemy"
+        },
+        {
+            "completed": false,
+            "description": "Study sql alchemy in charles house the friday at 3pm",
+            "id": 8,
+            "title": "Study SQLAlchemy with charles"
+        },
+        {
+            "completed": false,
+            "description": "Go to coffe shop to paint and enjoy",
+            "id": 9,
+            "title": "Go a date to draw with vele"
+        },
+        {
             "completed": true,
-            "description": "play rugby with boys",
+            "description": "play soccer with boys at 7pm in vision boyaca real",
             "id": 3,
-            "title": "play rugby"
+            "title": "play soccer"
         }

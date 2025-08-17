@@ -109,6 +109,7 @@ class Repo_Task:
     def delete_all_tasks(self):
         self.db.query(Task).delete()
         self.db.commit()
+        return True
 
     def complete_task(self, task_id: int) -> Optional[Task]:
         task = self.get_task(task_id)
@@ -118,7 +119,7 @@ class Repo_Task:
             self.db.refresh(task)
         return task
     
-    def decomplete_task(self, task_id: int) -> Optional[Task]:
+    def to_make_incomplete_task(self, task_id: int) -> Optional[Task]:
         task = self.get_task(task_id)
         if task:
             task.completed = False

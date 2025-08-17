@@ -5,7 +5,7 @@ from typing import List, Optional
 from exceptions.Already_Exist_Task_Exception import Already_Exist_Task_Exception #, Task_Not_Found_Exception
 from exceptions.Task_Not_Found_Exception import Task_Not_Found_Exception
 from exceptions.Task_Already_Completed import Task_Already_Completed
-from exceptions.Task_Already_Decompleted import Task_Already_Decompleted
+from exceptions.Task_Already_Incompleted import Task_Already_Incompleted
 class Service_Task:
     def __init__(self):
         self.db = SessionLocal()
@@ -51,13 +51,16 @@ class Service_Task:
     
     def update_task(self, id, task):
 
-        task_to_update = self.get_task(id)
-        existing_tasks = self.search_by_title(task.title)[0]
+        try:
+            task_to_update = self.get_task(id)
+            existing_tasks = self.search_by_title(task.title)[0]
         
-        if not (existing_tasks.id == task_to_update.id):
-            raise Already_Exist_Task_Exception("Already exist another task with that title")
-
-        return self.repo.update_task(id, task)
+            if not (existing_tasks.id == task_to_update.id):
+                raise Already_Exist_Task_Exception("Already exist another task with that title")
+        
+            return self.repo.update_task(id, task)
+        except Task_Not_Found_Exception:
+            return self.repo.update_task(id, task)
     
     def delete_task(self, task_id):
         self.get_task(task_id)
@@ -68,9 +71,9 @@ class Service_Task:
         tasks = self.get_all_tasks()
 
         if not tasks:
-            raise Task_Not_Found_Exception("Theres no tasks to delete")
+            raise Task_Not_Found_Exception("There are no tasks to delete")
         
-        self.repo.delete_all_tasks()
+        return self.repo.delete_all_tasks()
 
     def complete_task(self, task_id) -> Optional[Task]:
         
@@ -80,17 +83,17 @@ class Service_Task:
         
         return self.repo.complete_task(task_id)
 
-    def decomplete_task(self, task_id) -> Optional[Task]:
+    def to_make_incomplete_task(self, task_id) -> Optional[Task]:
         task = self.get_task(task_id)
 
         if not task.completed:
-            raise Task_Already_Decompleted("Task is already decompleted")
+            raise Task_Already_Incompleted("Task is already decompleted")
         
-        return self.repo.decomplete_task(task_id)
+        return self.repo.to_make_incomplete_task(task_id)
 
     def search_by_title(self, title) -> List[Task]:
 
-        if not title.strip() or not isinstance(title, str):
+        if not isinstance(title, str) or not title.strip():
             raise ValueError("Title must be a string and not be empty")
 
         tasks = self.repo.search_tasks_by_title(title)
